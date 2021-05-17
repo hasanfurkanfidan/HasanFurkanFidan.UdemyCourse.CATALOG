@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HasanFurkanFidan.UdemyCourse.CATALOG.API", "HasanFurkanFidan.UdemyCourse.CACALOG.API\HasanFurkanFidan.UdemyCourse.CATALOG.API.csproj", "{5657D421-C91E-4CB7-B252-F8355D161D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HasanFurkanFidan.UdemyCourse.CATALOG.API", "HasanFurkanFidan.UdemyCourse.CACALOG.API\HasanFurkanFidan.UdemyCourse.CATALOG.API.csproj", "{5657D421-C91E-4CB7-B252-F8355D161D4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{16DA0643-3976-4368-8ED7-A3DACEF00C5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HasanFurkanFidan.UdemyCourse.SHARED", "Shared\HasanFurkanFidan.UdemyCourse.SHARED\HasanFurkanFidan.UdemyCourse.SHARED.csproj", "{F73FCE82-1652-492E-81EA-D7DD611768A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{5657D421-C91E-4CB7-B252-F8355D161D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5657D421-C91E-4CB7-B252-F8355D161D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5657D421-C91E-4CB7-B252-F8355D161D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73FCE82-1652-492E-81EA-D7DD611768A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73FCE82-1652-492E-81EA-D7DD611768A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73FCE82-1652-492E-81EA-D7DD611768A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73FCE82-1652-492E-81EA-D7DD611768A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F73FCE82-1652-492E-81EA-D7DD611768A6} = {16DA0643-3976-4368-8ED7-A3DACEF00C5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F2B8440-EFB6-4BF0-847C-DC5A236F7883}
