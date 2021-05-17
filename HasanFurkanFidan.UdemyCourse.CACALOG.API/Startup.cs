@@ -1,3 +1,4 @@
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -26,8 +28,14 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddScoped<IDatabaseSettings, DatabaseSettings>();
+            services.AddSingleton<IDatabaseSettings>(sp =>
+            {
+                return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+            });
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
+            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HasanFurkanFidan.UdemyCourse.CAtALOG.API", Version = "v1" });
