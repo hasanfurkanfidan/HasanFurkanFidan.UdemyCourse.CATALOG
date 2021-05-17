@@ -53,6 +53,12 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Concrete
             return Response<CategoryUpdateDto>.Success(_mapper.Map<CategoryUpdateDto>(category), 200);
 
         }
+        //public async Task<Response<null>>DeleteAsync(Category category)
+        //{
+        //    await _categoryCollection.DeleteOneAsync(p=>p.Id==category.Id);
+        //    return Response<null>.Success(200, true);
+
+        //}
        
     }
 }

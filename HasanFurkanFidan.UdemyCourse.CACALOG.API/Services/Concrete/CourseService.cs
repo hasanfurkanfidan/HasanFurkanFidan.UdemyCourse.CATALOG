@@ -26,22 +26,29 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Concrete
         public async Task<Response<CourseAddDto>> AddAsync(Course course)
         {
             await _courseCollection.InsertOneAsync(course);
-            return new Response<CourseAddDto>.
+            return Response<CourseAddDto>.Success(_mapper.Map<CourseAddDto>(course),200);
+
         }
 
-        public Task<Response<List<CourseDto>>> GetAllAsync()
+        public async Task<Response<List<CourseDto>>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var coursesCursor = await _courseCollection.FindAsync(null);
+            var courses = await coursesCursor.ToListAsync();
+            return Response<List<CourseDto>>.Success(_mapper.Map<List<CourseDto>>(courses),200);
         }
 
-        public Task<Response<CourseDto>> GetByIdAsync(string id)
+        public async Task<Response<CourseDto>> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var courseCursor = await _courseCollection.FindAsync(p => p.Id == id);
+            var course = await courseCursor.FirstOrDefaultAsync();
+            return Response<CourseDto>.Success(_mapper.Map<CourseDto>(course), 200);
         }
 
-        public Task<Response<CourseUpdateDto>> UpdateAsync(Course course)
+        public async Task<Response<CourseUpdateDto>> UpdateAsync(Course course)
         {
-            throw new NotImplementedException();
+            await _courseCollection.ReplaceOneAsync(p=>p.Id == course.Id,course);
+            return Response<CourseUpdateDto>.Success(_mapper.Map<CourseUpdateDto>(course), 200);
+
         }
     }
 }

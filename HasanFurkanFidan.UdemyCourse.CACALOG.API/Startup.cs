@@ -1,3 +1,5 @@
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Concrete;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +31,8 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddScoped<IDatabaseSettings, DatabaseSettings>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICourseService, CourseService>();
             services.AddSingleton<IDatabaseSettings>(sp =>
             {
                 return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
