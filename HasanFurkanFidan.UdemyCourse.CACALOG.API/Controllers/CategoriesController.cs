@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.CustomFilterAttributes;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Dtos;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Models;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract;
@@ -36,6 +37,7 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Controllers
             return CreateActionResultInstance(response);
         }
         [HttpPost]
+        [ValidModel]
         public async Task<IActionResult> Add(CategoryAddDto model)
         {
             var response = await _categoryService.AddAsync(_mapper.Map<Category>(model));

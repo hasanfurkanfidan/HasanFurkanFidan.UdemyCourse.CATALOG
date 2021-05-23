@@ -1,9 +1,14 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.CustomFilterAttributes;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Data.Abstract;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Data.Concrete;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.Dtos;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.IOC;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Concrete;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Settings;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.ValidationRules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,13 +42,20 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
             //services.AddScoped<ICategoryService, CategoryManager>();
             //services.AddScoped<ICategoryRepository, CategoryRepository>();
             //services.AddScoped<ICourseService, CourseService>();
+            
             services.DependencyResolver();
+            //services.AddTransient<ValidModel>();
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+            services.AddTransient<IValidator<CategoryAddDto>,CategoryAddDtoValidator>();
             services.AddSingleton<IDatabaseSettings>(sp =>
             {
                 return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             });
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers().AddFluentValidation().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 ); ;
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
