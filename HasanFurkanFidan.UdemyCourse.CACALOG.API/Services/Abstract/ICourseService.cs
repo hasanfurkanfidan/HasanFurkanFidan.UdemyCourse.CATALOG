@@ -11,8 +11,12 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract
     public interface ICourseService
     {
         Task<Response<List<CourseDto>>> GetAllAsync();
+        Task<Response<List<CourseDto>>> GetCoursesWithFeatureAsync();
         Task<Response<CourseAddDto>> AddAsync(Course course);
-        Task<Response<CourseDto>> GetByIdAsync(string id);
-        Task<Response<CourseUpdateDto>> UpdateAsync(Course course);
+        Task<Response<CourseDto>> GetByIdAsync(int id);
+        Task<Response<NoContent>> UpdateAsync(CourseUpdateDto model);
+        Task<Response<NoContent>>DeleteAsync(int id);
+        Task<Response<List<CourseDto>>> GetByCategoryIdAsync(int id);
+
     }
 }

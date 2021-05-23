@@ -9,9 +9,9 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Models
 {
     public class Category
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+      
+        public int Id { get; set; }
         public string Name { get; set; }
+        public List<Course> Courses { get; set; }
     }
 }

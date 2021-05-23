@@ -30,7 +30,7 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Controllers
             return CreateActionResultInstance(response);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(int id)
         {
             var response = await _categoryService.GetByIdAsync(id);
             return CreateActionResultInstance(response);
@@ -38,24 +38,24 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CategoryAddDto model)
         {
-            var category = _mapper.Map<Category>(model);
-            var response = await _categoryService.AddAsync(category);
+            var response = await _categoryService.AddAsync(_mapper.Map<Category>(model));
             return CreateActionResultInstance(response);
+
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var response = await _categoryService.DeleteAsync(id);
+            return CreateActionResultInstance(response);
+
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(CategoryUpdateDto model)
+        public async Task<IActionResult>Update(CategoryUpdateDto model)
         {
-            var categoryUpdateDto = await _categoryService.GetByIdAsync(model.Id);
-
-            var response = await _categoryService.UpdateAsync(_mapper.Map<Category>(categoryUpdateDto));
+            var response = await _categoryService.UpdateAsync(model);
             return CreateActionResultInstance(response);
-        }
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult>Delete(string id)
-        //{
-        //    var categoryDto = await _categoryService.GetByIdAsync(id);
             
-        //}
-
+        }
     }
+
 }

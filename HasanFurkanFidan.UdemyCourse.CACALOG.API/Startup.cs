@@ -1,3 +1,6 @@
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.Data.Abstract;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.Data.Concrete;
+using HasanFurkanFidan.UdemyCourse.CATALOG.API.IOC;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Concrete;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Settings;
@@ -31,14 +34,18 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddScoped<IDatabaseSettings, DatabaseSettings>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICourseService, CourseService>();
+            //services.AddScoped<ICategoryService, CategoryManager>();
+            //services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //services.AddScoped<ICourseService, CourseService>();
+            services.DependencyResolver();
             services.AddSingleton<IDatabaseSettings>(sp =>
             {
                 return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             });
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+); ;
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddSwaggerGen(c =>
             {

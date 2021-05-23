@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Mapping
 {
-    public class GeneralMapping:Profile
+    public class GeneralMapping : Profile
     {
         public GeneralMapping()
         {
@@ -17,7 +17,8 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Mapping
             CreateMap<Feature, FeatureDto>().ReverseMap();
             CreateMap<Course, CourseAddDto>().ReverseMap();
             CreateMap<Course, CourseUpdateDto>().ReverseMap();
-           
+            CreateMap<Category, CategoryAddDto>().ReverseMap();
+            CreateMap<Category, CategoryUpdateDto>().ReverseMap();
         }
     }
 }

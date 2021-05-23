@@ -11,9 +11,11 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract
     public interface ICategoryService
     {
         Task<Response<List<CategoryDto>>> GetAllAsync();
+
         Task<Response<CategoryAddDto>> AddAsync(Category category);
-        Task<Response<CategoryDto>> GetByIdAsync(string id);
-        Task<Response<CategoryUpdateDto>> UpdateAsync(Category category);
+        Task<Response<CategoryDto>> GetByIdAsync(int id);
+        Task<Response<NoContent>> UpdateAsync(CategoryUpdateDto model);
+        Task<Response<NoContent>> DeleteAsync(int id);
     }
 
 }
