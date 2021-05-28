@@ -67,12 +67,11 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HasanFurkanFidan.UdemyCourse.CAtALOG.API", Version = "v1" });
             });
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.Authority = Configuration["IdentityServerUrl"];
-                options.Audience = "resource_catalog";
-
-            });
+            services.AddControllers(opt => {
+                opt.Filters.Add(new AuthorizeFilter());
+            }).AddFluentValidation().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
