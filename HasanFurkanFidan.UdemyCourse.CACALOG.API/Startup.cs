@@ -9,10 +9,12 @@ using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Abstract;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Services.Concrete;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.Settings;
 using HasanFurkanFidan.UdemyCourse.CATALOG.API.ValidationRules;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,26 +44,34 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
             //services.AddScoped<ICategoryService, CategoryManager>();
             //services.AddScoped<ICategoryRepository, CategoryRepository>();
             //services.AddScoped<ICourseService, CourseService>();
-            
+
             services.DependencyResolver();
             //services.AddTransient<ValidModel>();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
-            services.AddTransient<IValidator<CategoryAddDto>,CategoryAddDtoValidator>();
+            services.AddTransient<IValidator<CategoryAddDto>, CategoryAddDtoValidator>();
             services.AddSingleton<IDatabaseSettings>(sp =>
             {
                 return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             });
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers().AddFluentValidation().AddNewtonsoftJson(options =>
+            services.AddControllers(opt=> {
+                opt.Filters.Add(new AuthorizeFilter());
+            }).AddFluentValidation().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 ); ;
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HasanFurkanFidan.UdemyCourse.CAtALOG.API", Version = "v1" });
+            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerUrl"];
+                options.Audience = "resource_catalog";
+
             });
         }
 
@@ -78,7 +88,8 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication()
+                ;
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

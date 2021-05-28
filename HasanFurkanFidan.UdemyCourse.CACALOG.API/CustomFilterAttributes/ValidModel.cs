@@ -14,8 +14,13 @@ namespace HasanFurkanFidan.UdemyCourse.CATALOG.API.CustomFilterAttributes
         {
             if (!context.ModelState.IsValid)
             {
-                var response = Response<NoContent>.Fail("Validasyonlar başarıyla geçilmedi", 404);
-
+                var errors = new List<string>();
+                foreach (var error in context.ModelState.Values.FirstOrDefault().Errors)
+                {
+                    errors.Add(error.ErrorMessage);
+                }
+                var response = Response<NoContent>.Fail(errors, 404);
+                
                 context.Result = new ObjectResult(response)
                 {
                     StatusCode = response.StatusCode,
